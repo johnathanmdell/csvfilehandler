@@ -1,7 +1,12 @@
 <?php
 
-class exceptionsTest extends PHPUnit_Framework_TestCase
+class ExceptionsTest extends PHPUnit_Framework_TestCase
 {
+
+    protected function setUp()
+    {
+
+    }
 
     /**
      * @return \daleattree\CsvFileHandler\CsvFileHandler

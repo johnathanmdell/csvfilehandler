@@ -1,6 +1,6 @@
 <?php
 
-class bulkTest extends PHPUnit_Framework_TestCase
+class BulkTest extends PHPUnit_Framework_TestCase
 {
     /**
      * @var daleattree\CsvFileHandler\CsvFileHandler

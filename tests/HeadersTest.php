@@ -1,6 +1,6 @@
 <?php
 
-class headersTest extends PHPUnit_Framework_TestCase
+class HeadersTest extends PHPUnit_Framework_TestCase
 {
     public function testHeadersSpecified(){
         $testFile = __DIR__ . DIRECTORY_SEPARATOR . 'resources' . DIRECTORY_SEPARATOR . 'test.csv';
