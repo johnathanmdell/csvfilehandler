@@ -1,20 +1,18 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: dale
- * Date: 2015/10/04
- * Time: 11:20 AM
- */
 
-namespace daleattree\CsvFileHandler;
-
+namespace afrihost\CsvFileHandler;
 
 class RecordObject
 {
-    /** @var array */
-    private $headers;
+    /**
+     * @var array
+     */
+    private $headers = [];
 
-    private $data = array();
+    /**
+     * @var array
+     */
+    private $data = [];
 
     /**
      * Creates a object based on the array.
@@ -22,16 +20,15 @@ class RecordObject
      * @param $headers
      * @param $values
      */
-    public function __construct($headers, $values){
-        if(empty($headers)){
-            foreach($values as $k => $v) {
+    public function __construct($headers, $values)
+    {
+        if (empty($headers)) {
+            foreach ($values as $k => $v) {
                 $headers[$k] = 'col' . $k;
             }
         }
 
-        $this->headers = $headers;
-
-        foreach($headers as $k => $v){
+        foreach ($headers as $k => $v) {
             $key = $this->formatKey($v, $k);
             $this->data[$key] = $values[$k];
         }
@@ -43,11 +40,12 @@ class RecordObject
      * @param $index
      * @return string
      */
-    private function formatKey($header, $index){
+    private function formatKey($header, $index)
+    {
         $header = trim($header);
 
         //if header is empty, revert to default naming
-        if(empty($header)){
+        if (empty($header)) {
             $header = 'col' . $index;
         }
 
@@ -60,7 +58,7 @@ class RecordObject
         $field = explode("_", $header);
 
         //camel case the column header
-        foreach($field as $k => $v){
+        foreach ($field as $k => $v) {
             $field[$k] = ucfirst(strtolower($v));
         }
 
@@ -75,13 +73,14 @@ class RecordObject
      * @param $arguments
      * @throws \Exception
      */
-    public function __set($name, $arguments){
+    public function __set($name, $arguments)
+    {
 
-        if(!array_key_exists($name, $this->data)){
+        if (!array_key_exists($name, $this->data)) {
             throw new \Exception("Unknown column: " . $name . ". Unable to set value");
         }
 
-        if(count($arguments) == 1){
+        if (count($arguments) == 1) {
             $arguments = array_shift($arguments);
         }
 
@@ -94,9 +93,9 @@ class RecordObject
      * @return mixed
      * @throws \Exception
      */
-    public function __get($name){
-
-        if(!array_key_exists($name, $this->data)){
+    public function __get($name)
+    {
+        if (!array_key_exists($name, $this->data)) {
             throw new \Exception("Unknown column: " . $name . ". Unable to get value");
         }
 
@@ -110,11 +109,12 @@ class RecordObject
      * @return mixed|void
      * @throws \Exception
      */
-    public function __call($name, $arguments){
+    public function __call($name, $arguments)
+    {
         $action = substr($name, 0, 3);
         $name = substr($name, 3);
 
-        switch($action){
+        switch ($action) {
             case 'get':
                 return $this->__get($name);
                 break;
@@ -128,7 +128,8 @@ class RecordObject
      * Get array of header names
      * @return array
      */
-    public function getHeaders(){
+    public function getHeaders()
+    {
         return array_keys($this->data);
     }
 
@@ -136,7 +137,8 @@ class RecordObject
      * Get array of object values
      * @return array
      */
-    public function getValues(){
+    public function getValues()
+    {
         return array_values($this->data);
     }
 
@@ -144,7 +146,8 @@ class RecordObject
      * Get Record object as array
      * @return array
      */
-    public function getData(){
+    public function getData()
+    {
         return $this->data;
     }
 
@@ -153,7 +156,8 @@ class RecordObject
      * @see getData
      * @return array
      */
-    public function toArray(){
+    public function toArray()
+    {
         return $this->getData();
     }
 }

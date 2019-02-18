@@ -1,43 +1,52 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: dale
- * Date: 2015/10/04
- * Time: 11:08 AM
- */
 
-namespace daleattree\CsvFileHandler;
+namespace afrihost\CsvFileHandler;
 
-
-
-/**
- * Class CsvFileHandler
- * @package daleattree\CsvFileHandler
- */
 class CsvFileHandler
 {
-    /** @var String */
+    /**
+     * @var string
+     */
     protected $filename;
 
-    /** @var Array */
-    protected $records;
+    /**
+     * @var array
+     */
+    protected $records = [];
 
-    /** @var Boolean */
+    /**
+     * @var bool
+     */
     protected $headerRow;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     protected $delimiter = ',';
 
-    /** @var string */
+    /**
+     * @var string
+     */
     protected $enclosure = '"';
 
-    /** @var string */
+    /**
+     * @var string
+     */
     protected $escape = '\\';
 
+    /**
+     * @var resource|null
+     */
     protected $filePointer = null;
 
+    /**
+     * @var int
+     */
     protected $recordIndex = 0;
 
+    /**
+     * @var array
+     */
     protected $headers = [];
 
     /**
@@ -50,8 +59,14 @@ class CsvFileHandler
      * @param bool $autoParse
      * @throws \Exception
      */
-    public function __construct($filename, $headerRow = true, $delimiter = ',', $enclosure = '"', $escape = '\\', $autoParse = true)
-    {
+    public function __construct(
+        $filename,
+        $headerRow = true,
+        $delimiter = ',',
+        $enclosure = '"',
+        $escape = '\\',
+        $autoParse = true
+    ) {
         if (!file_exists($filename)) {
             throw new \Exception($filename . " not found");
         }
@@ -75,7 +90,7 @@ class CsvFileHandler
         $this->loadFilePointer();
         $this->processHeaders();
 
-        if($autoParse) {
+        if ($autoParse) {
             $this->parseFile();
         }
     }
@@ -200,10 +215,12 @@ class CsvFileHandler
         $this->records[] = $record;
     }
 
-    private function loadFilePointer(){
+    private function loadFilePointer()
+    {
         $fp = fopen($this->getFilename(), 'r');
         $this->setFilePointer($fp);
     }
+
     /**
      * @return null
      */
@@ -249,11 +266,13 @@ class CsvFileHandler
         $this->headers = $headers;
     }
 
-    private function processHeaders(){
+    private function processHeaders()
+    {
         $headers = null;
 
         if ($this->getHeaderRow()) {
-            $headers = fgetcsv($this->getFilePointer(), null, $this->getDelimiter(), $this->getEnclosure(), $this->getEscape());
+            $headers = fgetcsv($this->getFilePointer(), null, $this->getDelimiter(), $this->getEnclosure(),
+                $this->getEscape());
         }
 
         $this->setHeaders($headers);
@@ -264,7 +283,8 @@ class CsvFileHandler
      */
     public function parseFile()
     {
-        while (($values = fgetcsv($this->getFilePointer(), null, $this->getDelimiter(), $this->getEnclosure(), $this->getEscape())) !== false) {
+        while (($values = fgetcsv($this->getFilePointer(), null, $this->getDelimiter(), $this->getEnclosure(),
+                $this->getEscape())) !== false) {
             if (is_null($values)) {
                 continue;
             }
@@ -276,12 +296,14 @@ class CsvFileHandler
         fclose($this->getFilePointer());
     }
 
-    public function readRecord(){
-        if(feof($this->getFilePointer())){
+    public function readRecord()
+    {
+        if (feof($this->getFilePointer())) {
             return false;
         }
 
-        $values = fgetcsv($this->getFilePointer(), null, $this->getDelimiter(), $this->getEnclosure(), $this->getEscape());
+        $values = fgetcsv($this->getFilePointer(), null, $this->getDelimiter(), $this->getEnclosure(),
+            $this->getEscape());
 
         $this->incrementRecordIndex();
 
@@ -292,7 +314,8 @@ class CsvFileHandler
         return new RecordObject($this->getHeaders(), $values);
     }
 
-    public function closeFile(){
+    public function closeFile()
+    {
         fclose($this->getFilePointer());
     }
 }
