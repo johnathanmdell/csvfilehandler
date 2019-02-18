@@ -1,6 +1,6 @@
 <?php
 
-namespace afrihost\CsvFileHandler;
+namespace CsvFileHandler;
 
 class RecordObject
 {
