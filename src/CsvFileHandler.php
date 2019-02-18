@@ -318,4 +318,19 @@ class CsvFileHandler
     {
         fclose($this->getFilePointer());
     }
+
+    /**
+     * @param $header
+     * @return bool
+     */
+    public function hasHeader($header)
+    {
+        $result = array_filter($this->getHeaders(),
+            function ($header_column) use (&$header) {
+                return $header_column === $header;
+            }
+        );
+
+        return count($result) > 0;
+    }
 }

@@ -1,20 +1,38 @@
 <?php
 
-class HeadersTest extends PHPUnit_Framework_TestCase
+use CsvFileHandler\CsvFileHandler;
+
+class HeadersTest extends \PHPUnit\Framework\TestCase
 {
-    public function testHeadersSpecified(){
-        $testFile = __DIR__ . DIRECTORY_SEPARATOR . 'resources' . DIRECTORY_SEPARATOR . 'test.csv';
-        $csvFileHandler = new daleattree\CsvFileHandler\CsvFileHandler($testFile);
+    private const SMALL_TEST_EXISTING_HEADERS = [
+        'id',
+        'first_name',
+        'last_name',
+        'email',
+        'gender',
+        'ip_address'
+    ];
 
-        $records = $csvFileHandler->getRecords();
+    /**
+     * @var CsvFileHandler
+     */
+    private $csvFileHandler;
 
-        foreach($records as $record){
-            /** @var $record daleattree\CsvFileHandler\RecordObject */
+    public function setUp()
+    {
+        $this->csvFileHandler = new CsvFileHandler(__DIR__ . DIRECTORY_SEPARATOR .
+            'resources' . DIRECTORY_SEPARATOR . 'small_test.csv');
+    }
 
-            $this->assertArrayHasKey('Col0', $record->getData());
-            $this->assertArrayHasKey('Col1', $record->getData());
-            $this->assertArrayHasKey('Col2', $record->getData());
-            $this->assertArrayHasKey('Col3', $record->getData());
+    public function testHasHeadersSuccessWithSixHeaders() : void
+    {
+        foreach (self::SMALL_TEST_EXISTING_HEADERS as $header) {
+            $this->assertTrue($this->csvFileHandler->hasHeader($header));
         }
+    }
+
+    public function testHasHeadersFailureWithOneHeader() : void
+    {
+        $this->assertFalse($this->csvFileHandler->hasHeader('non_existent'));
     }
 }
