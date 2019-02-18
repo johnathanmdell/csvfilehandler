@@ -1,32 +1,32 @@
 {
-  "name": "daleattree/csvfilehandler",
+  "name": "afrihost/csvfilehandler",
   "description": "A library that loads and parses a CSV file, returning an object of the file with each CSV line as an object",
   "prefer-stable": true,
-  "license": "GPL-2.0",
-  "version": "1.0.12",
-  "time": "2016-01-11",
+  "license": "GNU-2.0",
+  "version": "2.0.0",
   "authors": [
     {
       "name": "Dale Attree",
       "email": "dale.attree@gmail.com",
       "homepage": "https://github.com/daleattree",
-      "role": "Developer"
+      "role": "Creator"
+    },
+    {
+      "name": "Afrihost",
+      "email": "dopen-source@afrihost.com",
+      "homepage": "https://www.afrihost.com",
+      "role": "Maintainer"
     }
   ],
-  "support": {
-    "issues": "https://github.com/daleattree/csvfilehandler/issues",
-    "wiki": "https://github.com/daleattree/csvfilehandler/wiki",
-    "source": "https://github.com/daleattree/csvfilehandler"
-  },
   "require": {
-    "php": ">=5.3.3"
+    "php": ">=7.1"
   },
   "autoload" : {
     "psr-4": {
-      "daleattree\\CsvFileHandler\\" : "src/"
+      "afrihost\\CsvFileHandler\\" : "src/"
     }
   },
   "require-dev": {
-    "phpunit/phpunit": "4-stable"
+    "phpunit/phpunit": "7-stable"
   }
 }
