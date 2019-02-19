@@ -2,7 +2,7 @@
   "name": "afrihost/csvfilehandler",
   "description": "A library that loads and parses a CSV file, returning an object of the file with each CSV line as an object. Written by Dale Attree, maintained by the Afrihost development team.",
   "prefer-stable": true,
-  "license": "GNU-2.0",
+  "license": "GPL-2.0",
   "version": "2.0.0",
   "authors": [
     {
